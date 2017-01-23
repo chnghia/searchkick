@@ -55,7 +55,7 @@ module Searchkick
                 type: "custom",
                 # char_filter: ["ampersand"],
                 tokenizer: "vietnamese",
-                filter: ["standard", "lowercase"],
+                filter: [],
               },
               searchkick_search2: {
                 type: "custom",
