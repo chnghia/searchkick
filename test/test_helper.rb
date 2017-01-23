@@ -102,6 +102,12 @@ if defined?(Mongoid)
 
   class Cat < Animal
   end
+
+  class VnText
+    include Mongoid::Document
+
+    field :text
+  end
 elsif defined?(NoBrainer)
   NoBrainer.configure do |config|
     config.app_name = :searchkick
@@ -161,6 +167,12 @@ elsif defined?(NoBrainer)
   end
 
   class Cat < Animal
+  end
+
+  class VnText
+    include NoBrainer::Document
+
+    field :name, type: Text
   end
 else
   require "active_record"
@@ -248,6 +260,10 @@ else
     t.string :type
   end
 
+  ActiveRecord::Migration.create_table :vn_texts do |t|
+    t.text :name
+  end
+
   class Product < ActiveRecord::Base
     belongs_to :store
   end
@@ -269,6 +285,9 @@ else
   end
 
   class Cat < Animal
+  end
+
+  class VnText < ActiveRecord::Base
   end
 end
 
@@ -385,6 +404,14 @@ class Animal
     # wordnet: true
 end
 
+class VnText
+  searchkick \
+    vietnamese: [:name],
+    suggest: [:name]
+    # suggest: [:name]
+    # wordnet: true
+end
+
 Product.searchkick_index.delete if Product.searchkick_index.exists?
 Product.reindex
 Product.reindex # run twice for both index paths
@@ -394,6 +421,7 @@ Store.reindex
 Animal.reindex
 Speaker.reindex
 Region.reindex
+VnText.reindex
 
 class Minitest::Test
   def setup
@@ -401,6 +429,7 @@ class Minitest::Test
     Store.destroy_all
     Animal.destroy_all
     Speaker.destroy_all
+    VnText.destroy_all
   end
 
   protected

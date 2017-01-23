@@ -51,6 +51,12 @@ module Searchkick
                 tokenizer: "standard",
                 filter: ["standard", "lowercase", "asciifolding", "searchkick_search_shingle", "searchkick_stemmer"]
               },
+              searchkick_vietnamese_index: {
+                type: "custom",
+                # char_filter: ["ampersand"],
+                tokenizer: "vietnamese",
+                filter: ["standard", "lowercase"],
+              },
               searchkick_search2: {
                 type: "custom",
                 char_filter: ["ampersand"],
@@ -129,6 +135,12 @@ module Searchkick
                 type: "nGram",
                 min_gram: 1,
                 max_gram: 50
+              },
+              searchkick_ngram_vietnamese: {
+                type: "nGram",
+                min_gram: 2,
+                max_gram: 50,
+                token_chars: ["letter", "digit"]
               },
               searchkick_stemmer: {
                 # use stemmer if language is lowercase, snowball otherwise
@@ -221,7 +233,7 @@ module Searchkick
         end
 
         mapping_options = Hash[
-          [:suggest, :word, :text_start, :text_middle, :text_end, :word_start, :word_middle, :word_end, :highlight, :searchable, :filterable]
+          [:suggest, :word, :text_start, :text_middle, :text_end, :word_start, :word_middle, :word_end, :highlight, :searchable, :filterable, :vietnamese]
             .map { |type| [type, (options[type] || []).map(&:to_s)] }
         ]
 
