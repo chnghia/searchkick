@@ -407,9 +407,10 @@ end
 class VnText
   searchkick \
     vietnamese: [:name],
-    suggest: [:name]
+    suggest: [:namecontent]
     # suggest: [:name]
     # wordnet: true
+  
 end
 
 Product.searchkick_index.delete if Product.searchkick_index.exists?

@@ -18,7 +18,7 @@ class VnTextTest < Minitest::Test
     assert_search "Can ho Quan 1", ["Căn hộ Quận 1"], { match: [:vietnamese, :word_start] }, VnText
   end
 
-  def test_order_string_1
+  def test_order_string_2
     # store_names ["Tân Bình", "Bình Tân", "Tân Phú"], VnText
     # texts = VnText.search("*", execute: false)
     # assert_equal ["thành phố Hồ Chí Minh"], texts.map(&:name)
@@ -33,4 +33,10 @@ class VnTextTest < Minitest::Test
     assert_order "Tân Bình", ["Tân Bình", "Bình Tân"], { match: [:vietnamese, :word_start] }, VnText
     assert_order "binhtan", ["Bình Tân"], { match: [:vietnamese, :suggest] }, VnText
   end
+
+  # def test_order_string_3
+  #   store_names ["Mua chung cư Thủ Dầu Một, Bình Dương", "Bán"], VnText
+  #   texts = VnText.search("*", execute: false)
+  #   assert_equal ["thành phố Hồ Chí Minh"], texts.map(&:name)
+  # end
 end
